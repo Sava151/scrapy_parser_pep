@@ -8,7 +8,6 @@ from collections import defaultdict
 class PepParsePipeline:
     def __init__(self):
         self.status_count = defaultdict(int)
-        self.total_count = 0
 
     def open_spider(self, spider):
         feeds_config = spider.settings.get('FEEDS', {})
@@ -22,7 +21,6 @@ class PepParsePipeline:
     def process_item(self, item, spider):
         status = item.get('status', 'Unknown')
         self.status_count[status] += 1
-        self.total_count += 1
         return item
 
     def close_spider(self, spider):
@@ -37,4 +35,4 @@ class PepParsePipeline:
             writer.writerow(['Статус', 'Количество'])
             for status, count in self.status_count.items():
                 writer.writerow([status, count])
-            writer.writerow(['Total', self.total_count])
+            writer.writerow(['Total', sum(self.status_count.values())])
