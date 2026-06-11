@@ -1,4 +1,62 @@
 # Проект парсинга pep
+## Особенности проекта
+
+- асинхронный обход страниц с использованием Scrapy;
+- извлечение данных через XPath и CSS-селекторы;
+- агрегация статистики по статусам PEP;
+- формирование CSV-отчетов;
+- проверка согласованности данных между реестром PEP и страницами отдельных документов;
+- автоматическое сохранение результатов в каталог results/.
+
+## Процесс сбора данных
+
+```mermaid
+flowchart TD
+
+A[PEP Index]
+--> B[PEP Links]
+
+B --> C[PEP Detail Pages]
+
+C --> D[Status Extraction]
+
+D --> E[Aggregation]
+
+E --> F[CSV Export]
+```
+
+## Архитектура
+
+```mermaid
+flowchart TD
+
+A[PEP Index Page]
+--> B[Scrapy Spider]
+
+B --> C[Extract PEP Links]
+
+C --> D[Parse PEP Page]
+
+D --> E[Collect Metadata]
+
+E --> F[Pipeline]
+
+F --> G[CSV Report]
+```
+## Структура проекта
+
+```text
+scrapy_parser_pep/
+├── pep_parse/
+│   ├── spiders/
+│   ├── pipelines.py
+│   ├── middlewares.py
+│   ├── settings.py
+│   └── items.py
+├── tests/
+├── results/
+└── README.md
+```
 
 # Установка. 
 ## Следуйте следующим команда для установки и развертывание проекта у себя локально 
